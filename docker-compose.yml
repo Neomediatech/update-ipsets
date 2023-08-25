@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: neomediatech/update-ipsets:latest
+    hostname: update-ipsets
+    volumes:
+      - data:/data
+    environment:
+      SLEEP: ${SLEEP:-600}
+      ENV_IPSETS_APPLY: ${ENV_IPSETS_APPLY:-0}
+    cap_add:
+      - NET_ADMIN
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /folder/path/in/your/host
+

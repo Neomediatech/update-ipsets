@@ -21,7 +21,51 @@ For example:
 `docker run -d --name update-ipsets --hostname update-ipsets -e SLEEP=300 -v /host/path:/data neomediatech/update-ipsets`  
 It runs every 5 minutes.  
 
-Logs are written to stdout.
+Logs are written to stdout.  
+
+While the container is running you can enable a list by running the command:  
+`docker exec -it update-ipsets update-ipsets enable list_name_you_want_to_enable`  
+It will be enabled automagically after the next awake (by default 600 seconds).
+
+If you want to delete obsolete ipset run:  
+`docker exec -it update-ipsets update-ipsets --cleanup`  
+
+## VERY IMPORTANT!
+Because ipsets are written into the kernel and Docker shares the kernel with the host, you have to run the same OS version between host and container, or at least the same `ipset` version.  
+Running this container with docker swarm/compose can be tricky if you want to make ipset works. For now it doesn't work, but it's not a problem because I'm running it as a standalone container.  
+
+### Docker swarm/compose
+If you want to run as a stack or with compose:  
+Create the file `docker-compose.yml` (or the name you prefer) and put inside it:  
+```
+version: '3.8'
+
+services:
+  app:
+    image: neomediatech/update-ipsets:latest
+    hostname: update-ipsets
+    volumes:
+      - data:/data
+    environment:
+      SLEEP: ${SLEEP:-600}
+      ENV_IPSETS_APPLY: ${ENV_IPSETS_APPLY:-0}
+    #cap_add:
+    #  - NET_ADMIN
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /folder/path/in/your/host
+
+```
+Then run:  
+`docker stack deploy -c docker-compose.yml update-ipsets`  
+or  
+`docker compose -f docker-compose.yml up update-ipsets` (with `-d` after `up` to run it in background)  
+Remember to change the path for the volume (`device: /folder/path/in/your/host`) and to enable NET_ADMIN if you want to make `ipset` works (delete the `#` on cap_add and NET_ADMIN lines).  
 
 ### Variables
 
