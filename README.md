@@ -1,6 +1,6 @@
 ## Intro
 Taken from [FireHOL](https://github.com/firehol/blocklist-ipsets/wiki).  
-Dockerized version of `update-ipset` script.  
+Dockerized version of `update-ipsets` script.  
 Original version is [here](https://raw.githubusercontent.com/firehol/firehol/master/sbin/update-ipsets)  
 
 ## Info
@@ -12,13 +12,13 @@ This is a customi[s|z]ed version, to solve some of our needs:
 
 ## Usage
 You can run this container with this command:  
-`docker run -d --name update-ipset --hostname update-ipset -v /host/path:/data neomediatech/update-ipset`  
+`docker run -d --name update-ipsets --hostname update-ipsets -v /host/path:/data neomediatech/update-ipsets`  
 or  
-`docker run -it --name update-ipset --hostname update-ipset -v /host/path:/data neomediatech/update-ipset`  
+`docker run -it --name update-ipsets --hostname update-ipsets -v /host/path:/data neomediatech/update-ipsets`  
 It will run every 10 mins (by default) or every seconds you set by `SLEEP` env var.  
 
 For example:  
-`docker run -d --name update-ipset --hostname update-ipset -e SLEEP=300 -v /host/path:/data neomediatech/update-ipset`  
+`docker run -d --name update-ipsets --hostname update-ipsets -e SLEEP=300 -v /host/path:/data neomediatech/update-ipsets`  
 It runs every 5 minutes.  
 
 Logs are written to stdout.
