@@ -1,14 +1,16 @@
 #!/bin/bash
 
 SLEEP=${SLEEP:-600}
+OPTS=""
 if [ -n "$1" ]; then
   echo "Running $@"
   exec "$@"
 else
+  if [ -f /data/etc/update-ipsets.conf ]; then
+    OPTS="-f /data/etc/update-ipsets.conf"
+  fi
   if [ -n "ENV_CONFIGFILE" ]; then
     OPTS="-f $ENV_CONFIGFILE"
-  else
-    OPTS=""
   fi
   echo "Running update-ipset -s $OPTS"
   while true; do

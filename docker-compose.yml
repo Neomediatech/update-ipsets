@@ -12,6 +12,12 @@ services:
     cap_add:
       - NET_ADMIN
 
+  web:
+    image: nginx:alpine
+    hostname: web
+    volumes:
+      - web_data:/usr/share/nginx/html
+
 volumes:
   data:
     driver: local
@@ -19,4 +25,11 @@ volumes:
       type: none
       o: bind
       device: /folder/path/in/your/host
+
+  web_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /another/folder/path/in/your/host
 

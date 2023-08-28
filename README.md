@@ -67,6 +67,43 @@ or
 `docker compose -f docker-compose.yml up update-ipsets` (with `-d` after `up` to run it in background)  
 Remember to change the path for the volume (`device: /folder/path/in/your/host`) and to enable NET_ADMIN if you want to make `ipset` works (delete the `#` on cap_add and NET_ADMIN lines).  
 
+### Web access
+Docker compose/swarm example to allow web access to generated html pages of your lists  
+```
+version: '3.8'
+
+services:
+  app:
+    image: neomediatech/update-ipsets:latest
+    hostname: update-ipsets
+    volumes:
+      - data:/data
+    environment:
+      SLEEP: ${SLEEP:-600}
+      ENV_IPSETS_APPLY: ${ENV_IPSETS_APPLY:-0}
+  web:
+    image:nginx:alpine
+    hostname: web
+    volumes:
+      - web_data:/usr/share/nginx/html
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /folder/path/in/your/host
+
+  web_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /another/folder/path/in/your/host
+```
+
+
 ### Variables
 
 These variables can be passed to the container from docker-compose.yml or directly by command line:
@@ -85,6 +122,7 @@ Other default settings can be found on [original repo](https://github.com/fireho
 - `/data/ipsets/ipsets.d` folder is used for your own download list logic
 - Web folder is placed in `/data/ipsets/web`
 - BASE_DIR is in /data/ipsets
+- If there's the configuration file /data/etc/update-ipsets.conf it will be used istead of default file /etc/firehol/update-ipsets.conf but if ENV_CONFIGFILE is set it will override all other configuration options
 
 ## To Do
 - [ ] Write results in log file (useful?)
