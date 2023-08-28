@@ -75,6 +75,7 @@ These variables can be passed to the container from docker-compose.yml or direct
 | ---------------- | ------- | ------------------------------------------------------------- |
 | SLEEP            | 600     | How many seconds to wait before running the next update       |
 | ENV_IPSETS_APPLY | 0       | Enables or disables the automatic ipsets update in the kernel |
+| ENV_CONFIGFILE   | empty   | Alternative path for the configuration file                   |
 
 In `/data/ipsets/ipsets.d` folder you can put your own download list logic, for example see [HERE](ipsets.d/)  
 
