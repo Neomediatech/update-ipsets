@@ -10,7 +10,7 @@ LABEL maintainer="docker-dario@neomediatech.it" \
       org.label-schema.maintainer=Neomediatech
 
 RUN apt-get update && apt-get -y dist-upgrade && \
-    apt-get install --no-install-recommends --no-install-suggests -y ca-certificates unzip curl procps ipset && \
+    apt-get install --no-install-recommends --no-install-suggests -y ca-certificates unzip curl procps ipset jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists*
 
