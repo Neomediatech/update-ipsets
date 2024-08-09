@@ -4045,7 +4045,7 @@ ipdeny_country() {
 
 	# move them inside the tmp, and fix continents
 	local x=
-	for x in $($FIND_CMD . -type f -a -name \*.zone)
+	for x in $($FIND_CMD . -type f -a -name \?\?.zone)
 	do
 		x=${x/*\//}
 		x=${x/.zone/}
