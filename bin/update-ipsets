@@ -2839,6 +2839,14 @@ update() {
 						;;
 
 				split)	;;
+				# 29 mag 2024 : neomediatech
+				asn)
+						hash="net"
+                                                limit=""
+                                                pre_filter="$CAT_CMD"
+                                                filter="$CAT_CMD"
+                                                post_filter="$CAT_CMD"
+						;;
 
 				*)		ipset_error "${ipset}" "unknown limit '${limit}'."
 						return 1
@@ -4128,8 +4136,8 @@ ip2location_country() {
 
 	local ipset="ip2location_country" limit="" hash="net" ipv="ipv4" \
 		mins=$[24 * 60 * 1] history_mins=0 \
-		url="http://download.ip2location.com/lite/IP2LOCATION-LITE-DB1.CSV.ZIP" \
-		info="[IP2Location.com](http://lite.ip2location.com/database-ip-country)" \
+		url="https://download.ip2location.com/lite/IP2LOCATION-LITE-DB1.CSV.ZIP" \
+		info="[IP2Location.com](https://lite.ip2location.com/database-ip-country)" \
 		ret=
 
 	ipset_shall_be_run "${ipset}"
@@ -4265,7 +4273,7 @@ ip2location_country() {
 			"geolocation" \
 			"${info2}" \
 			"IP2Location.com" \
-			"http://lite.ip2location.com/database-ip-country" \
+			"https://lite.ip2location.com/database-ip-country" \
 			service "geolocation"
 
 		[ -f "${BASE_DIR}/${i}.setinfo" ] && $MV_CMD -f "${BASE_DIR}/${i}.setinfo" "${BASE_DIR}/${ipset}/${i}.setinfo"
@@ -4275,7 +4283,7 @@ ip2location_country() {
 	if [ -d .git ]
 	then
 		# generate a setinfo for the home page
-		echo >"${BASE_DIR}/${ipset}.setinfo" "[${ipset}](${GITHUB_SETINFO}ip2location_country)|[IP2Location.com](http://lite.ip2location.com/database-ip-country) geolocation database|ipv4 hash:net|All the world|updated every `mins_to_text ${mins}` from [this link](${url})"
+		echo >"${BASE_DIR}/${ipset}.setinfo" "[${ipset}](${GITHUB_SETINFO}ip2location_country)|[IP2Location.com](https://lite.ip2location.com/database-ip-country) geolocation database|ipv4 hash:net|All the world|updated every `mins_to_text ${mins}` from [this link](${url})"
 	fi
 
 	# remove the temporary dir
@@ -5915,13 +5923,13 @@ ip2location_ip2proxy_px1lite() {
 if [ ! -z "${IP2LOCATION_API_KEY}" ]
 	then
 	update ip2proxy_px1lite $[24*60] 0 ipv4 both \
-		"http://www.ip2location.com/download/?token=${IP2LOCATION_API_KEY}&file=PX1LITE" \
+		"https://www.ip2location.com/download/?token=${IP2LOCATION_API_KEY}&file=PX1LITE" \
 		ip2location_ip2proxy_px1lite \
 		"anonymizers" \
 		"[IP2Location.com](https://lite.ip2location.com/database/px1-ip-country) IP2Proxy LITE IP-COUNTRY Database contains IP addresses which are used as public proxies. The LITE edition is a free version of database that is limited to public proxies IP address." \
 		"IP2Location.com" "https://lite.ip2location.com/database/px1-ip-country" \
 		license "Creative Commons Attribution 4.0 International Public License" \
-		public_url "http://www.ip2location.com/download/?token=APIKEY&file=PX1LITE" \
+		public_url "https://www.ip2location.com/download/?token=APIKEY&file=PX1LITE" \
 		dont_enable_with_all \
 		dont_redistribute
 fi
